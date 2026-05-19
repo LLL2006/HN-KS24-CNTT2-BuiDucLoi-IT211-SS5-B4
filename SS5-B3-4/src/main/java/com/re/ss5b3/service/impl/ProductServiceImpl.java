@@ -47,13 +47,16 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product updatePartial(Long id, Map<String, Object> updates) {
-        Product product = productRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Không tìm thấy sản phẩm có id = " + id));
-        if(updates.containsKey("name")) {
+        Product product = productRepository.findById(id)
+                .orElseThrow(() ->
+                        new NoSuchElementException("Không tìm thấy sản phẩm có id = " + id));
+
+        if (updates.containsKey("name")) {
             product.setName((String) updates.get("name"));
         }
 
-        if(updates.containsKey("price")) {
-            product.setPrice((Double) updates.get("price"));
+        if (updates.containsKey("price")) {
+            product.setPrice(Double.valueOf(updates.get("price").toString()));
         }
 
         return productRepository.save(product);
